@@ -1,21 +1,21 @@
 package com.github.rybalkinan.event.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "public.organizer")
+@Table(name = "organizer")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Organizer {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "organizer_id")
-    private int organizerId;
+public class Organizer extends BaseEntity{
 
     @Column(columnDefinition = "organizer_name")
     private String organizerName;

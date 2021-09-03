@@ -1,18 +1,20 @@
 package com.github.rybalkinan.event.models;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-@Data
+@Getter
+@Setter
 @Entity
-@Table(name = "public.event_type")
-public class EventType {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "event_type_id")
-    private int eventTypeId;
+@Table(name = "event_type")
+@NoArgsConstructor
+@AllArgsConstructor
+public class EventType extends BaseEntity{
 
     public String eventTypeDescription;
 
