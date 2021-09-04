@@ -2,12 +2,13 @@ package com.github.rybalkinan.event.models;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 @Getter
@@ -16,10 +17,11 @@ import java.sql.Date;
 @Table(name = "event")
 public class Event extends BaseEntity{
 
-    @NonNull
+    @NotNull(message = "Organizer is required")
     private int organizer;
 
-    @NonNull
+    @NotNull(message = "Event name is required")
+    @NotBlank(message = "Event name is required")
     @Column(columnDefinition = "event_name")
     private String eventName;
 
@@ -31,11 +33,11 @@ public class Event extends BaseEntity{
     @Column(columnDefinition = "event_date_range")
     private Date eventDateRange;
 
-    @NonNull
+    @NotBlank(message = "Event address is required")
     @Column(columnDefinition = "event_address")
     private String eventAddress;
 
-    @NonNull
+    @NotNull(message = "Event type is required")
     @Column(columnDefinition = "event_type")
     private int eventType;
 

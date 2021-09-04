@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,8 +45,7 @@ public class EventController {
     }
 
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Event> saveEvent(@RequestBody @Validated Event event) {
-        System.out.println(event);
+    public ResponseEntity<Event> saveEvent(@Valid @RequestBody Event event) {
         HttpHeaders headers = new HttpHeaders();
         if (event == null){
             return new ResponseEntity<>(BAD_REQUEST);
