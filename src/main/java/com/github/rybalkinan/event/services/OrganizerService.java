@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface OrganizerService {
     Optional<Organizer> getById(Integer id);
     void save(Organizer organizer);
-    void delete(Integer id);
+    void delete(Organizer organizer);
     List<Organizer> getAll();
 }

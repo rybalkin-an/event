@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface EventService {
     Optional<Event> getById(Integer id);
     void save(Event event);
-    void delete(Integer id);
+    void delete(Event event);
     List<Event> getAll();
 }
