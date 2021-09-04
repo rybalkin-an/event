@@ -17,22 +17,22 @@ public class OrganizerServiceImpl implements OrganizerService{
     OrganizerRepository organizerRepository;
 
     @Override
-    public Optional<Organizer> getOrganizerById(Integer organizerId) {
+    public Optional<Organizer> getById(Integer organizerId) {
         return organizerRepository.findById(organizerId);
     }
 
     @Override
-    public void saveOrganizer(Organizer organizer) {
+    public void save(Organizer organizer) {
         organizerRepository.save(organizer);
     }
 
     @Override
-    public void deleteOrganizer(Integer id) {
+    public void delete(Integer id) {
         organizerRepository.deleteById(id);
     }
 
     @Override
-    public List<Organizer> getOrganizers() {
+    public List<Organizer> getAll() {
         return organizerRepository.findAll();
     }
 }

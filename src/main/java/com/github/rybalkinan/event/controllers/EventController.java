@@ -1,7 +1,7 @@
 package com.github.rybalkinan.event.controllers;
 
-import com.github.rybalkinan.event.models.Organizer;
-import com.github.rybalkinan.event.services.OrganizerService;
+import com.github.rybalkinan.event.models.Event;
+import com.github.rybalkinan.event.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,53 +16,54 @@ import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/api/v1/organizer/")
-public class OrganizerController {
+@RequestMapping("/api/v1/event/")
+public class EventController {
 
     @Autowired
-    OrganizerService organizerService;
+    EventService eventService;
 
     @GetMapping(value = "{id}", produces = APPLICATION_JSON_VALUE)
-    public HttpEntity<?> getOrganizer(@PathVariable Integer id) {
+    public HttpEntity<?> getEvent(@PathVariable Integer id) {
         if (id == null){
             return new ResponseEntity<>(BAD_REQUEST);
         }
-        Optional<Organizer> organizer = this.organizerService.getById(id);
-        if (!organizer.isPresent()){
+        Optional<Event> event = this.eventService.getById(id);
+        if (!event.isPresent()){
             return new ResponseEntity<>(NOT_FOUND);
         }
-        return new ResponseEntity<>(organizer, OK);
+        return new ResponseEntity<>(event, OK);
     }
 
     @GetMapping(value = "", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Organizer>> getAllOrganizers(){
-        List<Organizer> organizers = this.organizerService.getAll();
-        if (organizers.isEmpty()) {
+    public ResponseEntity<List<Event>> getAllEvents(){
+        List<Event> events = this.eventService.getAll();
+        if (events.isEmpty()) {
             return new ResponseEntity<>(NOT_FOUND);
         }
-        return new ResponseEntity<>(organizers, OK);
+        return new ResponseEntity<>(events, OK);
     }
 
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Organizer> saveOrganizer(@RequestBody @Validated Organizer organizer) {
+    public ResponseEntity<Event> saveEvent(@RequestBody @Validated Event event) {
+        System.out.println(event);
         HttpHeaders headers = new HttpHeaders();
-        if (organizer == null){
+        if (event == null){
             return new ResponseEntity<>(BAD_REQUEST);
         }
-        this.organizerService.save(organizer);
-        return new ResponseEntity<>(organizer, headers, CREATED);
+        this.eventService.save(event);
+        return new ResponseEntity<>(event, headers, CREATED);
     }
 
     @DeleteMapping(value = "{id}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Organizer> deleteOrganizer(@PathVariable Integer id) {
+    public ResponseEntity<Event> deleteEvent(@PathVariable Integer id) {
         if (id == null){
             return new ResponseEntity<>(BAD_REQUEST);
         }
-        Optional<Organizer> organizer = this.organizerService.getById(id);
-        if (!organizer.isPresent()){
+        Optional<Event> event = this.eventService.getById(id);
+        if (!event.isPresent()){
             return new ResponseEntity<>(NOT_FOUND);
         }
-        this.organizerService.delete(id);
+        this.eventService.delete(id);
         return new ResponseEntity<>(NO_CONTENT);
     }
 }

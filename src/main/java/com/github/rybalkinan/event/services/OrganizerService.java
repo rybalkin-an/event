@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrganizerService {
-    Optional<Organizer> getOrganizerById(Integer id);
-    void saveOrganizer(Organizer organizer);
-    void deleteOrganizer(Integer id);
-    List<Organizer> getOrganizers();
+    Optional<Organizer> getById(Integer id);
+    void save(Organizer organizer);
+    void delete(Integer id);
+    List<Organizer> getAll();
 }
