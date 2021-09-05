@@ -2,7 +2,6 @@ package com.github.rybalkinan.event.controllers;
 
 import com.github.rybalkinan.event.exceptions.ResourceNotFoundException;
 import com.github.rybalkinan.event.models.Event;
-import com.github.rybalkinan.event.models.Organizer;
 import com.github.rybalkinan.event.services.EventService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -97,6 +96,9 @@ public class EventController {
         if (event == null){
             return new ResponseEntity<>(BAD_REQUEST);
         }
+        Integer id = event.getId();
+        this.eventService.getById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Event with id '" + id + "' not found"));
         this.eventService.save(event);
         return new ResponseEntity<>(event, headers, OK);
     }

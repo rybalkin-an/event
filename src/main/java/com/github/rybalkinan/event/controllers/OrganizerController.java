@@ -1,7 +1,6 @@
 package com.github.rybalkinan.event.controllers;
 
 import com.github.rybalkinan.event.exceptions.ResourceNotFoundException;
-import com.github.rybalkinan.event.models.Event;
 import com.github.rybalkinan.event.models.Organizer;
 import com.github.rybalkinan.event.services.OrganizerService;
 import io.swagger.v3.oas.annotations.Operation;
