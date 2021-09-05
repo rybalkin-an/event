@@ -2,7 +2,13 @@ package com.github.rybalkinan.event.controllers;
 
 import com.github.rybalkinan.event.exceptions.ResourceNotFoundException;
 import com.github.rybalkinan.event.models.Event;
+import com.github.rybalkinan.event.models.Organizer;
 import com.github.rybalkinan.event.services.EventService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +30,15 @@ public class EventController {
 
     private Event event;
 
+    @Operation(summary = "Get event by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Event found",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Event.class)) }),
+            @ApiResponse(responseCode = "400", description = "Invalid event id",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Event not found",
+                    content = @Content) })
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
     public HttpEntity<?> getEvent(@PathVariable Integer id) {
         if (id == null){
@@ -34,6 +49,13 @@ public class EventController {
         return new ResponseEntity<>(event, OK);
     }
 
+    @Operation(summary = "Get list of all events")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "All events has been found",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Event.class)) }),
+            @ApiResponse(responseCode = "404", description = "Events are not found",
+                    content = @Content) })
     @GetMapping(value = "", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Event>> getAllEvents(){
         List<Event> events = this.eventService.getAll();
@@ -43,6 +65,13 @@ public class EventController {
         return new ResponseEntity<>(events, OK);
     }
 
+    @Operation(summary = "Create new event")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Event has been created",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Event.class)) }),
+            @ApiResponse(responseCode = "400", description = "Invalid event model",
+                    content = @Content)})
     @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Event> saveEvent(@Valid @RequestBody Event event) {
         HttpHeaders headers = new HttpHeaders();
@@ -53,7 +82,16 @@ public class EventController {
         return new ResponseEntity<>(event, headers, CREATED);
     }
 
-    @PutMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
+    @Operation(summary = "Update event")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Event updated",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Event.class)) }),
+            @ApiResponse(responseCode = "400", description = "Invalid event model",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Event not found",
+                    content = @Content) })
+    @PutMapping(value = "", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Event> updateEvent(@Valid @RequestBody Event event) {
         HttpHeaders headers = new HttpHeaders();
         if (event == null){
@@ -63,6 +101,15 @@ public class EventController {
         return new ResponseEntity<>(event, headers, OK);
     }
 
+    @Operation(summary = "Delete event")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Event deleted",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Event.class)) }),
+            @ApiResponse(responseCode = "400", description = "Invalid event id",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Event not found",
+                    content = @Content) })
     @DeleteMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Event> deleteEvent(@PathVariable Integer id) {
         if (id == null){
